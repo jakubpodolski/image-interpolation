@@ -77,10 +77,12 @@ public class Polynomial {
 
     public int calculateYValueInX (){
 
-        int wartosc = coefficients.get(0);
+        int value = coefficients.get(0);
         for(int i = 1; i < 4; i++){
-            wartosc += coefficients.get(i) * Math.pow(X, i);
+            value += coefficients.get(i) * Math.pow(X, i);
         }
-        return Math.abs(wartosc);                                           // #####################################################
+        if (value>255) return 255;
+        else if (value<0) return 0;
+        else return value;
     }
 }
