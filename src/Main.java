@@ -23,6 +23,7 @@ public class Main {
         Image testIMG = new Image();
         testIMG.smoothOut();
         testIMG.sharpOut();
+        testIMG.interpolation2D();
 
     }
 }

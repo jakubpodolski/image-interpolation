@@ -4,13 +4,13 @@ import java.util.List;
 
 public class Polynomial {
 
-    public List<Integer> xValues = new ArrayList<>();
+    public List<Float> xValues = new ArrayList<>();
     public List<Float> yValues = new ArrayList<>();
     public List<Float> cValues = new ArrayList<>();
     public List<Float> coefficients = new ArrayList<>(4);
-    public int X;
+    public float X;
 
-    public Polynomial(List<Integer> x, List<Float> y, int X) {
+    public Polynomial(List<Float> x, List<Float> y, float X) {
         this.xValues = x;
         this.yValues = y;
         this.X = X;
@@ -81,6 +81,8 @@ public class Polynomial {
         for(int i = 1; i < 4; i++){
             value += coefficients.get(i) * Math.pow(X, i);
         }
-        return value;
+        if (value>1) return 1;
+        else if(value<0) return 0;
+        else return value;
     }
 }
