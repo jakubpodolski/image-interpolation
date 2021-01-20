@@ -4,13 +4,13 @@ import java.util.List;
 
 public class Polynomial {
 
-    public List<Integer> xValues = new ArrayList<>();
-    public List<Integer> yValues = new ArrayList<>();
-    public List<Integer> cValues = new ArrayList<>();
-    public List<Integer> coefficients = new ArrayList<>(4);
-    public double X;
+    public List<Float> xValues = new ArrayList<>();
+    public List<Float> yValues = new ArrayList<>();
+    public List<Float> cValues = new ArrayList<>();
+    public List<Float> coefficients = new ArrayList<>(4);
+    public float X;
 
-    public Polynomial(List<Integer> x, List<Integer> y, int X) {
+    public Polynomial(List<Float> x, List<Float> y, float X) {
         this.xValues = x;
         this.yValues = y;
         this.X = X;
@@ -18,9 +18,9 @@ public class Polynomial {
     }
 
     public void calculateC() {
-        int c0 = yValues.get(0);
-        List<Integer> cFirstColumn = new ArrayList<>();
-        List<Integer> cSecondColumn = new ArrayList<>();
+        float c0 = yValues.get(0);
+        List<Float> cFirstColumn = new ArrayList<>();
+        List<Float> cSecondColumn = new ArrayList<>();
 
         for(int i=0; i<3;i++){
             cFirstColumn.add((yValues.get(1+i)-yValues.get(i))/(xValues.get(1+i)-xValues.get(i)));
@@ -29,9 +29,9 @@ public class Polynomial {
         cSecondColumn.add((cFirstColumn.get(1)-cFirstColumn.get(0))/(xValues.get(2)-xValues.get(0)));
         cSecondColumn.add((cFirstColumn.get(2)-cFirstColumn.get(1))/(xValues.get(3)-xValues.get(1)));
 
-        int c0123 = (cSecondColumn.get(1)-cSecondColumn.get(0))/(xValues.get(3)-xValues.get(0));
+        float c0123 = (cSecondColumn.get(1)-cSecondColumn.get(0))/(xValues.get(3)-xValues.get(0));
 
-        List<Integer> cValues = new ArrayList<>();
+        List<Float> cValues = new ArrayList<>();
         Collections.addAll(cValues, c0,cFirstColumn.get(0),cSecondColumn.get(0),c0123);
 
         this.cValues = cValues;
@@ -40,14 +40,14 @@ public class Polynomial {
 
 
     public void setCoefficients() {
-        int c0 = cValues.get(0);
-        int c1 = cValues.get(1);
-        int c2 = cValues.get(2);
-        int c3 = cValues.get(3);
+        float c0 = cValues.get(0);
+        float c1 = cValues.get(1);
+        float c2 = cValues.get(2);
+        float c3 = cValues.get(3);
 
-        int a = xValues.get(0);
-        int b = xValues.get(1);
-        int c = xValues.get(2);
+        float a = xValues.get(0);
+        float b = xValues.get(1);
+        float c = xValues.get(2);
 
 
         coefficients.add(0,c0-(c1*a)+(c2*a*b)-(c3*a*b*c));
@@ -75,12 +75,14 @@ public class Polynomial {
         }
     }
 
-    public int calculateYValueInX (){
+    public float calculateYValueInX (){
 
-        int wartosc = coefficients.get(0);
+        float value = coefficients.get(0);
         for(int i = 1; i < 4; i++){
-            wartosc += coefficients.get(i) * Math.pow(X, i);
+            value += coefficients.get(i) * Math.pow(X, i);
         }
-        return Math.abs(wartosc);                                           // #####################################################
+        if (value>1) return 1;
+        else if(value<0) return 0;
+        else return value;
     }
 }
